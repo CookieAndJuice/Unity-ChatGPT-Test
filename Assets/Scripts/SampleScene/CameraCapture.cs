@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class CameraCapture : MonoBehaviour
 {
-    [SerializeField] private Camera camera;       //보여지는 카메라.
+    [SerializeField] private Camera selectedCamera;       //보여지는 카메라.
     
     public static Func<string> capture;
     private int resWidth;
@@ -35,10 +35,10 @@ public class CameraCapture : MonoBehaviour
         string name;
         name = imagePath + System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".png";
         RenderTexture rt = new RenderTexture(resWidth, resHeight, 24);
-        camera.targetTexture = rt;
+        selectedCamera.targetTexture = rt;
         Texture2D screenShot = new Texture2D(resWidth, resHeight, TextureFormat.RGB24, false);
         Rect rec = new Rect(0, 0, screenShot.width, screenShot.height);
-        camera.Render();
+        selectedCamera.Render();
         RenderTexture.active = rt;
         screenShot.ReadPixels(new Rect(0, 0, resWidth, resHeight), 0, 0);
         screenShot.Apply();

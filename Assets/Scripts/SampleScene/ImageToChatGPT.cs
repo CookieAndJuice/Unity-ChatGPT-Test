@@ -31,7 +31,8 @@ public class ImageToChatGPT : MonoBehaviour
         {
             imageBase64String = CameraCapture.capture();
 
-            ChatGPTAPI.gptEvent(imageBase64String);
+            //ChatGPTAPI.gptEvent(imageBase64String);
+            Debug.Log("Finish to set : " + imageBase64String.Length);
         }
         else
         {
@@ -41,9 +42,9 @@ public class ImageToChatGPT : MonoBehaviour
             byte[] fileData = File.ReadAllBytes(files[0]);
             imageBase64String = Convert.ToBase64String(fileData);
 
-            ChatGPTAPI.gptEvent(imageBase64String);
+            //ChatGPTAPI.gptEvent(imageBase64String);
 
-            Debug.Log("Finish to set : " + imageBase64String);
+            Debug.Log("Finish to set : " + imageBase64String.Length);
         }
     }
 }

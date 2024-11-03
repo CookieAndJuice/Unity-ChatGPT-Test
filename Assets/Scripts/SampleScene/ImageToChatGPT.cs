@@ -1,4 +1,3 @@
-using OpenAI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +9,6 @@ using UnityEngine.UI;
 public class ImageToChatGPT : MonoBehaviour
 {
     [SerializeField] private Button imageSetButton;
-    [SerializeField] private GameObject textArea;
     private string[] files;
 
     string imagePath;
@@ -25,13 +23,19 @@ public class ImageToChatGPT : MonoBehaviour
         files = Directory.GetFiles(imagePath, "*.png");
     }
 
+    public string EncodeImage(string imagePath)
+    {
+        byte[] imageBytes = File.ReadAllBytes(imagePath);
+        return Convert.ToBase64String(imageBytes);
+    }
+
     private void SetImage()
     {
         if (files.Length == 0)
         {
             imageBase64String = CameraCapture.capture();
 
-            //ChatGPTAPI.gptEvent(imageBase64String);
+            ChatGPTAPI.gptEvent(imageBase64String);
             Debug.Log("Finish to set : " + imageBase64String.Length);
         }
         else
@@ -39,10 +43,9 @@ public class ImageToChatGPT : MonoBehaviour
             Debug.Log(files.Length);
             Debug.Log("Set Image : " + files[0]);
 
-            byte[] fileData = File.ReadAllBytes(files[0]);
-            imageBase64String = Convert.ToBase64String(fileData);
+            imageBase64String = EncodeImage(files[0]);
 
-            //ChatGPTAPI.gptEvent(imageBase64String);
+            ChatGPTAPI.gptEvent(imageBase64String);
 
             Debug.Log("Finish to set : " + imageBase64String.Length);
         }
